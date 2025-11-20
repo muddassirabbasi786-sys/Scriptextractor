@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examples - ScriptExtract</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #fafafa;
+            --accent-blue: #0066ff;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --text-dark: #111827;
+            --text-light: #f3f4f6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-blue), #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .example-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .transcript-sample {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .format-demo {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .timestamp {
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">SE</span>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">ScriptExtract</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-blue-400 transition-colors">Extract</a>
+                    <a href="about.html" class="text-gray-300 hover:text-blue-400 transition-colors">About</a>
+                    <a href="help.html" class="text-gray-300 hover:text-blue-400 transition-colors">Help</a>
+                    <a href="examples.html" class="text-white hover:text-blue-400 transition-colors">Examples</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                    <span class="gradient-text">Example</span> Gallery
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    See ScriptExtract in action with real-world examples and format demonstrations
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Examples -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6">Featured Examples</h2>
+                <p class="text-xl text-gray-300">
+                    Explore different types of content and their extracted transcripts
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="example-card rounded-xl overflow-hidden fade-in" onclick="showExample('tutorial')">
+                    <div class="h-48 bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+                        <span class="text-6xl">🎥</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Tutorial Video</h3>
+                        <p class="text-gray-300 mb-4">
+                            Educational content with clear speech and technical terminology
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-400">
+                            <span>⏱️ 12:34 duration</span>
+                            <span>🎯 99.2% accuracy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card rounded-xl overflow-hidden fade-in" onclick="showExample('interview')">
+                    <div class="h-48 bg-gradient-to-br from-green-600 to-teal-600 flex items-center justify-center">
+                        <span class="text-6xl">🎙️</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Podcast Interview</h3>
+                        <p class="text-gray-300 mb-4">
+                            Natural conversation between multiple speakers with timestamps
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-400">
+                            <span>⏱️ 45:22 duration</span>
+                            <span>🎯 98.7% accuracy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card rounded-xl overflow-hidden fade-in" onclick="showExample('presentation')">
+                    <div class="h-48 bg-gradient-to-br from-red-600 to-pink-600 flex items-center justify-center">
+                        <span class="text-6xl">📊</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Business Presentation</h3>
+                        <p class="text-gray-300 mb-4">
+                            Professional speech with technical terms and structured content
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-400">
+                            <span>⏱️ 28:15 duration</span>
+                            <span>🎯 99.1% accuracy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card rounded-xl overflow-hidden fade-in" onclick="showExample('lecture')">
+                    <div class="h-48 bg-gradient-to-br from-yellow-600 to-orange-600 flex items-center justify-center">
+                        <span class="text-6xl">🎓</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">University Lecture</h3>
+                        <p class="text-gray-300 mb-4">
+                            Academic content with complex terminology and structured delivery
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-400">
+                            <span>⏱️ 52:08 duration</span>
+                            <span>🎯 98.9% accuracy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card rounded-xl overflow-hidden fade-in" onclick="showExample('news')">
+                    <div class="h-48 bg-gradient-to-br from-indigo-600 to-blue-600 flex items-center justify-center">
+                        <span class="text-6xl">📺</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">News Broadcast</h3>
+                        <p class="text-gray-300 mb-4">
+                            Professional journalism with clear articulation and standard terminology
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-400">
+                            <span>⏱️ 08:45 duration</span>
+                            <span>🎯 99.5% accuracy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card rounded-xl overflow-hidden fade-in" onclick="showExample('review')">
+                    <div class="h-48 bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center">
+                        <span class="text-6xl">⭐</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Product Review</h3>
+                        <p class="text-gray-300 mb-4">
+                            Consumer-focused content with descriptive language and opinions
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-400">
+                            <span>⏱️ 16:32 duration</span>
+                            <span>🎯 98.8% accuracy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Format Comparison -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6">Export Format Comparison</h2>
+                <p class="text-xl text-gray-300">
+                    See how the same content appears in different export formats
+                </p>
+            </div>
+
+            <div class="glass-effect rounded-xl p-8 fade-in">
+                <div class="flex flex-wrap gap-2 mb-8">
+                    <button class="tab-button px-4 py-2 rounded-lg bg-gray-700 text-white active" onclick="switchTab('txt')">
+                        Plain Text (.txt)
+                    </button>
+                    <button class="tab-button px-4 py-2 rounded-lg bg-gray-700 text-white" onclick="switchTab('srt')">
+                        Subtitles (.srt)
+                    </button>
+                    <button class="tab-button px-4 py-2 rounded-lg bg-gray-700 text-white" onclick="switchTab('json')">
+                        JSON (.json)
+                    </button>
+                    <button class="tab-button px-4 py-2 rounded-lg bg-gray-700 text-white" onclick="switchTab('timestamp')">
+                        With Timestamps
+                    </button>
+                </div>
+
+                <div class="tab-content active" id="txt">
+                    <h3 class="text-xl font-bold mb-4">Plain Text Format</h3>
+                    <p class="text-gray-300 mb-4">
+                        Clean, readable text without timestamps. Perfect for articles, blog posts, and general reading.
+                    </p>
+                    <div class="format-demo rounded-lg p-6 text-sm">
+                        <p class="mb-4">
+                            Welcome to our comprehensive tutorial on machine learning fundamentals. 
+                            In this video, we'll explore the basic concepts that every data scientist 
+                            should understand before diving deeper into advanced algorithms.
+                        </p>
+                        <p class="mb-4">
+                            Machine learning is essentially teaching computers to learn patterns from data 
+                            without being explicitly programmed for every possible scenario. This approach 
+                            has revolutionized how we solve complex problems in various industries.
+                        </p>
+                        <p>
+                            The three main types of machine learning are supervised learning, unsupervised learning, 
+                            and reinforcement learning. Each approach has its own strengths and applications 
+                            depending on the problem you're trying to solve.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="srt">
+                    <h3 class="text-xl font-bold mb-4">SRT Subtitle Format</h3>
+                    <p class="text-gray-300 mb-4">
+                        Standard subtitle format with precise timing. Ideal for video editing and captioning.
+                    </p>
+                    <div class="format-demo rounded-lg p-6 text-sm mono-font">
+                        <div class="mb-4">
+                            <div>1</div>
+                            <div>00:00:00,000 --> 00:00:05,240</div>
+                            <div>Welcome to our comprehensive tutorial on machine learning fundamentals.</div>
+                        </div>
+                        <div class="mb-4">
+                            <div>2</div>
+                            <div>00:00:05,240 --> 00:00:10,480</div>
+                            <div>In this video, we'll explore the basic concepts that every data scientist</div>
+                        </div>
+                        <div class="mb-4">
+                            <div>3</div>
+                            <div>00:00:10,480 --> 00:00:15,720</div>
+                            <div>should understand before diving deeper into advanced algorithms.</div>
+                        </div>
+                        <div>
+                            <div>4</div>
+                            <div>00:00:15,720 --> 00:00:20,960</div>
+                            <div>Machine learning is essentially teaching computers to learn patterns from data</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="json">
+                    <h3 class="text-xl font-bold mb-4">JSON Format</h3>
+                    <p class="text-gray-300 mb-4">
+                        Structured data format with metadata. Perfect for applications and data processing.
+                    </p>
+                    <div class="format-demo rounded-lg p-6 text-sm mono-font">
+                        <div class="text-green-400">{</div>
+                        <div class="ml-4 text-yellow-400">"video_info"</div>
+                        <div class="ml-8 text-green-400">{</div>
+                        <div class="ml-12 text-yellow-400">"title"</div>
+                        <div class="ml-16 text-white">: "Machine Learning Fundamentals Tutorial",</div>
+                        <div class="ml-12 text-yellow-400">"duration"</div>
+                        <div class="ml-16 text-white">: "12:34",</div>
+                        <div class="ml-12 text-yellow-400">"language"</div>
+                        <div class="ml-16 text-white">: "en",</div>
+                        <div class="ml-12 text-yellow-400">"extracted_at"</div>
+                        <div class="ml-16 text-white">: "2024-01-15T10:30:00Z"</div>
+                        <div class="ml-8 text-green-400">},</div>
+                        <div class="ml-8 text-yellow-400">"transcript"</div>
+                        <div class="ml-8 text-green-400">[</div>
+                        <div class="ml-12 text-green-400">{</div>
+                        <div class="ml-16 text-yellow-400">"start"</div>
+                        <div class="ml-20 text-white">: 0.0,</div>
+                        <div class="ml-16 text-yellow-400">"end"</div>
+                        <div class="ml-20 text-white">: 5.24,</div>
+                        <div class="ml-16 text-yellow-400">"text"</div>
+                        <div class="ml-20 text-white">: "Welcome to our comprehensive tutorial on machine learning fundamentals."</div>
+                        <div class="ml-12 text-green-400">},</div>
+                        <div class="ml-12 text-green-400">{</div>
+                        <div class="ml-16 text-yellow-400">"start"</div>
+                        <div class="ml-20 text-white">: 5.24,</div>
+                        <div class="ml-16 text-yellow-400">"end"</div>
+                        <div class="ml-20 text-white">: 10.48,</div>
+                        <div class="ml-16 text-yellow-400">"text"</div>
+                        <div class="ml-20 text-white">: "In this video, we'll explore the basic concepts that every data scientist"</div>
+                        <div class="ml-12 text-green-400">}</div>
+                        <div class="ml-8 text-green-400">]</div>
+                        <div class="text-green-400">}</div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="timestamp">
+                    <h3 class="text-xl font-bold mb-4">Text with Timestamps</h3>
+                    <p class="text-gray-300 mb-4">
+                        Readable text with embedded timestamps for easy navigation and reference.
+                    </p>
+                    <div class="format-demo rounded-lg p-6 text-sm">
+                        <p class="mb-4">
+                            <span class="timestamp">[00:00]</span> Welcome to our comprehensive tutorial on machine learning fundamentals. 
+                            In this video, we'll explore the basic concepts that every data scientist should understand.
+                        </p>
+                        <p class="mb-4">
+                            <span class="timestamp">[00:15]</span> Machine learning is essentially teaching computers to learn patterns from data 
+                            without being explicitly programmed for every possible scenario. This approach has revolutionized 
+                            how we solve complex problems in various industries.
+                        </p>
+                        <p class="mb-4">
+                            <span class="timestamp">[00:35]</span> The three main types of machine learning are supervised learning, 
+                            unsupervised learning, and reinforcement learning. Each approach has its own strengths and applications.
+                        </p>
+                        <p>
+                            <span class="timestamp">[00:55]</span> Throughout this tutorial, we'll provide practical examples and 
+                            real-world applications to help you understand these concepts better.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sample Transcript Modal -->
+    <div id="exampleModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="glass-effect rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+                <div class="p-6 border-b border-gray-600 flex items-center justify-between">
+                    <h3 id="modalTitle" class="text-2xl font-bold"></h3>
+                    <button onclick="closeModal()" class="text-gray-400 hover:text-white text-2xl">×</button>
+                </div>
+                <div class="p-6 overflow-y-auto max-h-[70vh]">
+                    <div id="modalContent" class="transcript-sample rounded-lg p-6 text-sm">
+                        <!-- Transcript content will be loaded here -->
+                    </div>
+                </div>
+                <div class="p-6 border-t border-gray-600 flex items-center justify-between">
+                    <div class="text-gray-400">
+                        <span id="modalStats"></span>
+                    </div>
+                    <button onclick="copyModalContent()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors">
+                        📋 Copy Transcript
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">SE</span>
+                </div>
+                <span class="text-xl font-bold gradient-text">ScriptExtract</span>
+            </div>
+            <p class="text-gray-400">
+                © 2024 ScriptExtract. Empowering content creators with instant transcript extraction.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Sample transcript data
+        const sampleTranscripts = {
+            tutorial: {
+                title: "Machine Learning Fundamentals Tutorial",
+                stats: "12:34 duration • 2,847 words • 99.2% accuracy",
+                content: `[00:00] Welcome to our comprehensive tutorial on machine learning fundamentals. 
+In this video, we'll explore the basic concepts that every data scientist should understand before diving deeper into advanced algorithms.
+
+[00:15] Machine learning is essentially teaching computers to learn patterns from data without being explicitly programmed for every possible scenario. This approach has revolutionized how we solve complex problems in various industries.
+
+[00:35] The three main types of machine learning are supervised learning, unsupervised learning, and reinforcement learning. Each approach has its own strengths and applications depending on the problem you're trying to solve.
+
+[00:55] Supervised learning uses labeled training data to learn the mapping between inputs and outputs. Common algorithms include linear regression, decision trees, and neural networks. This is the most common type of machine learning in practice.
+
+[01:20] Unsupervised learning works with unlabeled data to discover hidden patterns and structures. Clustering algorithms like K-means and hierarchical clustering fall into this category, as do dimensionality reduction techniques like PCA.
+
+[01:45] Reinforcement learning involves training agents to make sequences of decisions in an environment to maximize cumulative rewards. This approach has been successfully applied in game playing, robotics, and autonomous systems.
+
+[02:10] Throughout this tutorial, we'll provide practical examples and real-world applications to help you understand these concepts better. We'll also discuss common pitfalls and best practices to follow when implementing machine learning solutions.`
+            },
+            interview: {
+                title: "Tech Industry Podcast Interview",
+                stats: "45:22 duration • 8,934 words • 98.7% accuracy",
+                content: `[00:00] Host: Welcome to TechTalk, the podcast where we explore the latest trends in technology. Today we're joined by Sarah Chen, CTO of InnovateAI. Sarah, thanks for being here.
+
+[00:12] Sarah: Thanks for having me, Mike. I'm excited to discuss where AI is heading in the next few years.
+
+[00:18] Host: So let's start with the basics. Many people are still confused about the difference between AI and machine learning. How do you explain this to non-technical audiences?
+
+[00:28] Sarah: Great question. I like to use the analogy of a car. AI is like the entire car - it's the complete system that can drive itself, make decisions, and navigate the world. Machine learning is more like the engine - it's a crucial component, but not the whole picture.
+
+[00:45] Host: That's a helpful analogy. What about deep learning? Where does that fit in?
+
+[00:50] Sarah: Deep learning is actually a subset of machine learning. Think of it as a turbocharged engine. It uses neural networks with many layers - hence the term "deep" - to process information in increasingly sophisticated ways.`
+            },
+            presentation: {
+                title: "AI in Business: Transforming Operations",
+                stats: "28:15 duration • 5,203 words • 99.1% accuracy",
+                content: `[00:00] Good morning, everyone. Today I want to talk about how artificial intelligence is fundamentally transforming business operations across industries. This isn't just about automation - it's about intelligent decision-making at scale.
+
+[00:20] Let's start with some numbers. According to recent McKinsey research, companies that have fully embraced AI report 20-30% improvement in operational efficiency and 15-20% increase in revenue. These aren't incremental gains - they're transformative.
+
+[00:45] The key areas where AI is making the biggest impact are customer service, supply chain optimization, and predictive maintenance. In customer service, AI-powered chatbots now handle 70% of routine inquiries, freeing human agents to focus on complex issues that require empathy and creative problem-solving.
+
+[01:15] Supply chain optimization is another game-changer. AI algorithms can analyze thousands of variables in real-time - weather patterns, traffic conditions, supplier performance - to optimize delivery routes and inventory levels. Walmart reported saving $2 billion annually through AI-driven supply chain improvements.
+
+[01:50] Predictive maintenance is perhaps the most tangible ROI from AI investment. By analyzing sensor data from equipment, AI can predict failures before they happen, reducing downtime by up to 50% and maintenance costs by 25%. General Electric's aviation division saves an estimated $1.6 billion annually through predictive maintenance.
+
+[02:30] But here's what I really want to emphasize: successful AI implementation isn't just about the technology. It's about organizational change management. The companies seeing the best results are those that invest equally in people, processes, and technology.`
+            },
+            lecture: {
+                title: "Introduction to Quantum Mechanics",
+                stats: "52:08 duration • 9,847 words • 98.9% accuracy",
+                content: `[00:00] Good morning, class. Today we'll begin our exploration of quantum mechanics, one of the most fascinating and counterintuitive areas of physics. By the end of this lecture, you'll understand why Einstein called quantum mechanics "spooky action at a distance."
+
+[00:25] Let's start with the fundamental principle that distinguishes quantum mechanics from classical physics: wave-particle duality. This concept tells us that every particle or quantum entity can exhibit both particle-like and wave-like behavior, depending on how we observe it.
+
+[00:50] The double-slit experiment is perhaps the most famous demonstration of this principle. When we fire electrons through two slits, they create an interference pattern on a screen behind the slits - this is wave behavior. But when we try to determine which slit each electron passes through, the interference pattern disappears, and we see particle behavior.
+
+[01:30] This leads us to the Heisenberg Uncertainty Principle, which states that we cannot simultaneously know both the exact position and exact momentum of a particle. The more precisely we know one, the less precisely we can know the other. This isn't due to measurement limitations - it's a fundamental property of nature.
+
+[02:10] Another crucial concept is quantum superposition. Unlike classical objects that must be in one definite state, quantum systems can exist in multiple states simultaneously. Schrödinger's cat is both alive and dead until we open the box and observe it.
+
+[02:55] Quantum entanglement is perhaps the most mysterious phenomenon we'll discuss today. When two particles become entangled, measuring the state of one instantly affects the state of the other, regardless of the distance between them. Einstein famously called this "spooky action at a distance" because it seems to violate the speed of light limit.`
+            },
+            news: {
+                title: "Breaking: Major Tech Acquisition Announced",
+                stats: "08:45 duration • 1,567 words • 99.5% accuracy",
+                content: `[00:00] Good evening. I'm Jennifer Martinez with TechNews Daily. We begin tonight with breaking news in the technology sector. MegaTech Corporation has just announced its acquisition of InnovateAI for a staggering $47 billion, marking one of the largest tech deals in recent history.
+
+[00:25] The acquisition, announced early this morning, will see MegaTech taking control of InnovateAI's entire portfolio of artificial intelligence technologies, including their groundbreaking natural language processing platform and advanced computer vision systems.
+
+[00:45] In a statement released to the press, MegaTech CEO David Thompson said, quote, "This acquisition represents a significant milestone in our commitment to advancing AI technology. InnovateAI's talented team and innovative products will accelerate our vision of making AI accessible to everyone."
+
+[01:15] Industry analysts are calling this a game-changing move. Sarah Kim, senior technology analyst at Wall Street Insights, joins us now. Sarah, what does this acquisition mean for the broader tech landscape?
+
+[01:28] Sarah: Jennifer, this is huge. We're seeing a major consolidation in the AI space, and MegaTech is positioning itself as the dominant player. The $47 billion price tag reflects the enormous value that companies see in AI technology.
+
+[01:45] The deal is expected to face regulatory scrutiny, given MegaTech's already significant market presence. However, company representatives expressed confidence that the acquisition will be approved, citing the competitive nature of the AI industry.`
+            },
+            review: {
+                title: "iPhone 15 Pro Max: 30-Day Review",
+                stats: "16:32 duration • 3,245 words • 98.8% accuracy",
+                content: `[00:00] Hey everyone, welcome back to the channel. Today I'm bringing you my comprehensive 30-day review of the iPhone 15 Pro Max. I've been using this as my daily driver since launch day, and I have some thoughts to share.
+
+[00:15] Let's start with the design. The titanium frame is a game-changer. It's significantly lighter than the stainless steel on previous models - we're talking about a 19-gram reduction in weight. That might not sound like much, but trust me, you feel it during extended use.
+
+[00:35] The Action Button is probably my favorite new feature. After a month of use, I've customized it to launch my camera, and it's become second nature. The haptic feedback is satisfying, and the customization options are extensive.
+
+[00:55] Camera performance is where this phone really shines. The 5x telephoto lens is incredible for portrait photography. I've taken some shots that I honestly thought were from my mirrorless camera. The computational photography has also improved significantly.
+
+[01:20] Battery life has been impressive. I'm consistently getting 8-9 hours of screen-on time with my usage pattern, which includes heavy social media use, photography, and some gaming. The USB-C port is a welcome addition - file transfers are much faster.
+
+[01:45] However, it's not perfect. The price is astronomical, starting at $1,199. And while the titanium is lighter, it seems to scratch more easily than stainless steel. I've already noticed some micro-abrasions on the frame.
+
+[02:10] Overall, though, this is the most refined iPhone experience I've had. The improvements might seem incremental on paper, but they add up to a significantly better user experience. If you're coming from an iPhone 12 or older, this is a worthwhile upgrade.`
+            }
+        };
+
+        // Modal functions
+        function showExample(type) {
+            const modal = document.getElementById('exampleModal');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            const stats = document.getElementById('modalStats');
+            
+            const transcript = sampleTranscripts[type];
+            if (transcript) {
+                title.textContent = transcript.title;
+                stats.textContent = transcript.stats;
+                content.innerHTML = transcript.content.replace(/\n/g, '<br>');
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('exampleModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function copyModalContent() {
+            const content = document.getElementById('modalContent');
+            const text = content.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                // Show success message
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = '✅ Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('exampleModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

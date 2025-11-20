@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help - ScriptExtract</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #fafafa;
+            --accent-blue: #0066ff;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --text-dark: #111827;
+            --text-light: #f3f4f6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-blue), #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .faq-content.active {
+            max-height: 500px;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .search-highlight {
+            background-color: rgba(0, 102, 255, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">SE</span>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">ScriptExtract</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-blue-400 transition-colors">Extract</a>
+                    <a href="about.html" class="text-gray-300 hover:text-blue-400 transition-colors">About</a>
+                    <a href="help.html" class="text-white hover:text-blue-400 transition-colors">Help</a>
+                    <a href="examples.html" class="text-gray-300 hover:text-blue-400 transition-colors">Examples</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                    Help & <span class="gradient-text">Documentation</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Everything you need to know about using ScriptExtract effectively
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="py-12 bg-gray-900">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="glass-effect rounded-xl p-6 fade-in">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="helpSearch" 
+                        placeholder="Search help documentation..."
+                        class="w-full px-6 py-4 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 text-lg"
+                    >
+                    <div class="absolute right-4 top-1/2 transform -translate-y-1/2">
+                        <span class="text-gray-400">🔍</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Guide -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6">Quick Start Guide</h2>
+                <p class="text-xl text-gray-300">
+                    Get started with ScriptExtract in just a few simple steps
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass-effect rounded-xl p-6 text-center fade-in">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Copy URL</h3>
+                    <p class="text-gray-300">
+                        Copy the full YouTube video URL from your browser's address bar or the share button.
+                    </p>
+                </div>
+
+                <div class="glass-effect rounded-xl p-6 text-center fade-in">
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Paste & Extract</h3>
+                    <p class="text-gray-300">
+                        Paste the URL into ScriptExtract and click the "Extract Script" button to begin processing.
+                    </p>
+                </div>
+
+                <div class="glass-effect rounded-xl p-6 text-center fade-in">
+                    <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Review & Edit</h3>
+                    <p class="text-gray-300">
+                        Review the extracted transcript and make any necessary edits or corrections.
+                    </p>
+                </div>
+
+                <div class="glass-effect rounded-xl p-6 text-center fade-in">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl font-bold">4</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Export & Use</h3>
+                    <p class="text-gray-300">
+                        Copy to clipboard or export in your preferred format (TXT, SRT, JSON, PDF).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-300">
+                    Find answers to common questions about ScriptExtract
+                </p>
+            </div>
+
+            <div class="space-y-4" id="faqContainer">
+                <div class="faq-item rounded-xl fade-in" data-keywords="url format link youtube video supported">
+                    <div class="p-6 cursor-pointer" onclick="toggleFAQ(this)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold">What YouTube URL formats are supported?</h3>
+                            <span class="text-2xl">+</span>
+                        </div>
+                    </div>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-300">
+                            We support all standard YouTube URL formats including:<br><br>
+                            • https://www.youtube.com/watch?v=videoID<br>
+                            • https://youtu.be/videoID<br>
+                            • https://www.youtube.com/embed/videoID<br>
+                            • Mobile links (m.youtube.com)<br>
+                            • Shortened URLs
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-xl fade-in" data-keywords="accuracy quality error mistakes">
+                    <div class="p-6 cursor-pointer" onclick="toggleFAQ(this)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold">How accurate are the transcripts?</h3>
+                            <span class="text-2xl">+</span>
+                        </div>
+                    </div>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-300">
+                            Our AI-powered system achieves 99%+ accuracy for clear audio in supported languages. 
+                            Accuracy may vary based on audio quality, background noise, accents, and speaking speed. 
+                            We recommend reviewing and editing transcripts for critical applications.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-xl fade-in" data-keywords="language multilingual support translation">
+                    <div class="p-6 cursor-pointer" onclick="toggleFAQ(this)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold">Which languages are supported?</h3>
+                            <span class="text-2xl">+</span>
+                        </div>
+                    </div>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-300">
+                            We support transcription in 50+ languages including: English, Spanish, French, German, 
+                            Italian, Portuguese, Dutch, Russian, Japanese, Chinese (Mandarin), Korean, Arabic, 
+                            Hindi, and many more. The system automatically detects the language of the video.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-xl fade-in" data-keywords="time processing speed duration long video">
+                    <div class="p-6 cursor-pointer" onclick="toggleFAQ(this)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold">How long does extraction take?</h3>
+                            <span class="text-2xl">+</span>
+                        </div>
+                    </div>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-300">
+                            Most transcripts are extracted within 30-60 seconds, depending on video length and audio complexity. 
+                            Longer videos (1+ hours) may take 2-3 minutes. The progress bar shows real-time processing status.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-xl fade-in" data-keywords="privacy security data storage confidential">
+                    <div class="p-6 cursor-pointer" onclick="toggleFAQ(this)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold">Is my data private and secure?</h3>
+                            <span class="text-2xl">+</span>
+                        </div>
+                    </div>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-300">
+                            Absolutely. We process all transcripts securely and never store your video content or transcripts. 
+                            All processing happens in real-time, and your data is automatically deleted after the session ends. 
+                            We use industry-standard encryption and security practices.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-xl fade-in" data-keywords="format export download txt srt json pdf">
+                    <div class="p-6 cursor-pointer" onclick="toggleFAQ(this)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold">What export formats are available?</h3>
+                            <span class="text-2xl">+</span>
+                        </div>
+                    </div>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-300">
+                            You can export transcripts in multiple formats:<br><br>
+                            • <strong>TXT</strong> - Plain text with or without timestamps<br>
+                            • <strong>SRT</strong> - Subtitle format for video editing<br>
+                            • <strong>JSON</strong> - Structured data with metadata<br>
+                            • <strong>PDF</strong> - Formatted document for sharing<br>
+                            • <strong>Copy to Clipboard</strong> - Instant copy for immediate use
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-xl fade-in" data-keywords="edit modify change fix correct transcript">
+                    <div class="p-6 cursor-pointer" onclick="toggleFAQ(this)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold">Can I edit the transcript after extraction?</h3>
+                            <span class="text-2xl">+</span>
+                        </div>
+                    </div>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-300">
+                            Yes! You can edit the transcript directly in our interface before exporting. 
+                            Use the search function to find specific sections, make corrections, and then 
+                            copy or export the edited version. Changes are not saved automatically, 
+                            so make sure to export your edited transcript.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-xl fade-in" data-keywords="limit length duration video size maximum">
+                    <div class="p-6 cursor-pointer" onclick="toggleFAQ(this)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold">Is there a video length limit?</h3>
+                            <span class="text-2xl">+</span>
+                        </div>
+                    </div>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-300">
+                            ScriptExtract can handle videos up to 3 hours in length. For longer content, 
+                            we recommend breaking it into smaller segments. Most videos under 2 hours 
+                            process quickly and efficiently.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item rounded-xl fade-in" data-keywords="error problem issue troubleshooting help support">
+                    <div class="p-6 cursor-pointer" onclick="toggleFAQ(this)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-semibold">What if extraction fails or has errors?</h3>
+                            <span class="text-2xl">+</span>
+                        </div>
+                    </div>
+                    <div class="faq-content px-6 pb-6">
+                        <p class="text-gray-300">
+                            If extraction fails, try these troubleshooting steps:<br><br>
+                            • Check that the YouTube URL is valid and accessible<br>
+                            • Ensure the video has audio and isn't region-restricted<br>
+                            • Try refreshing the page and pasting the URL again<br>
+                            • For poor audio quality, consider using a different video source<br>
+                            • Contact support if issues persist
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Troubleshooting Section -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6">Troubleshooting</h2>
+                <p class="text-xl text-gray-300">
+                    Common issues and their solutions
+                </p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="glass-effect rounded-xl p-6 fade-in">
+                    <h3 class="text-xl font-bold mb-3 text-red-400">❌ "Invalid URL" Error</h3>
+                    <div class="text-gray-300 space-y-2">
+                        <p><strong>Cause:</strong> The URL format is not recognized or the video is not accessible.</p>
+                        <p><strong>Solution:</strong></p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li>Check that the URL starts with https://www.youtube.com/ or https://youtu.be/</li>
+                            <li>Ensure the video is public and not private or deleted</li>
+                            <li>Try copying the URL directly from the browser address bar</li>
+                            <li>Remove any additional parameters after the video ID</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-effect rounded-xl p-6 fade-in">
+                    <h3 class="text-xl font-bold mb-3 text-yellow-400">⚠️ "No Audio Detected" Error</h3>
+                    <div class="text-gray-300 space-y-2">
+                        <p><strong>Cause:</strong> The video doesn't contain any recognizable speech or audio.</p>
+                        <p><strong>Solution:</strong></p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li>Verify the video has audible speech or dialogue</li>
+                            <li>Check that the video's audio isn't muted or corrupted</li>
+                            <li>Try a different video to test if the issue is specific to one video</li>
+                            <li>Ensure the video isn't primarily music without lyrics</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-effect rounded-xl p-6 fade-in">
+                    <h3 class="text-xl font-bold mb-3 text-blue-400">🐌 Slow Processing Times</h3>
+                    <div class="text-gray-300 space-y-2">
+                        <p><strong>Cause:</strong> Long videos, poor audio quality, or high server load.</p>
+                        <p><strong>Solution:</strong></p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li>For videos longer than 1 hour, be patient - processing can take 2-3 minutes</li>
+                            <li>Try processing during off-peak hours (early morning or late evening)</li>
+                            <li>Check your internet connection speed</li>
+                            <li>Consider breaking very long videos into shorter segments</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="glass-effect rounded-xl p-6 fade-in">
+                    <h3 class="text-xl font-bold mb-3 text-purple-400">🔍 Poor Transcript Quality</h3>
+                    <div class="text-gray-300 space-y-2">
+                        <p><strong>Cause:</strong> Audio quality issues, background noise, or strong accents.</p>
+                        <p><strong>Solution:</strong></p>
+                        <ul class="list-disc list-inside ml-4 space-y-1">
+                            <li>Use videos with clear audio and minimal background noise</li>
+                            <li>Manually edit the transcript using our built-in editor</li>
+                            <li>For heavily accented speech, try videos with clearer pronunciation</li>
+                            <li>Use high-quality headphones to better hear the original audio</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Support -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="glass-effect rounded-xl p-12 fade-in">
+                <h2 class="text-3xl font-bold mb-6">Still Need Help?</h2>
+                <p class="text-xl text-gray-300 mb-8">
+                    Can't find what you're looking for? Our support team is here to help.
+                </p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">📧 Email Support</h3>
+                        <p class="text-gray-300 mb-4">
+                            Send us your questions and we'll get back to you within 24 hours.
+                        </p>
+                        <button class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg transition-colors">
+                            Contact Support
+                        </button>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-4">💬 Live Chat</h3>
+                        <p class="text-gray-300 mb-4">
+                            Get instant help from our support team during business hours.
+                        </p>
+                        <button class="bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg transition-colors">
+                            Start Chat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">SE</span>
+                </div>
+                <span class="text-xl font-bold gradient-text">ScriptExtract</span>
+            </div>
+            <p class="text-gray-400">
+                © 2024 ScriptExtract. Empowering content creators with instant transcript extraction.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // FAQ Toggle Function
+        function toggleFAQ(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('span');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-content.active').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelectorAll('.faq-item span').forEach(item => {
+                    item.textContent = '+';
+                });
+                
+                // Open clicked FAQ
+                content.classList.add('active');
+                icon.textContent = '−';
+            }
+        }
+
+        // Search functionality
+        document.getElementById('helpSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const keywords = item.dataset.keywords.toLowerCase();
+                const title = item.querySelector('h3').textContent.toLowerCase();
+                const content = item.querySelector('.faq-content p').textContent.toLowerCase();
+                
+                if (searchTerm === '' || keywords.includes(searchTerm) || title.includes(searchTerm) || content.includes(searchTerm)) {
+                    item.style.display = 'block';
+                    // Highlight search terms
+                    if (searchTerm !== '') {
+                        highlightText(item, searchTerm);
+                    } else {
+                        removeHighlight(item);
+                    }
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        function highlightText(element, searchTerm) {
+            const textNodes = getTextNodes(element);
+            textNodes.forEach(node => {
+                if (node.nodeValue.toLowerCase().includes(searchTerm)) {
+                    const regex = new RegExp(`(${searchTerm})`, 'gi');
+                    const highlightedText = node.nodeValue.replace(regex, '<span class="search-highlight">$1</span>');
+                    const wrapper = document.createElement('span');
+                    wrapper.innerHTML = highlightedText;
+                    node.parentNode.replaceChild(wrapper, node);
+                }
+            });
+        }
+
+        function removeHighlight(element) {
+            const highlights = element.querySelectorAll('.search-highlight');
+            highlights.forEach(highlight => {
+                highlight.outerHTML = highlight.innerHTML;
+            });
+        }
+
+        function getTextNodes(element) {
+            const textNodes = [];
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            let node;
+            while (node = walker.nextNode()) {
+                textNodes.push(node);
+            }
+            return textNodes;
+        }
+    </script>
+</body>
+</html>

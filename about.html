@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - ScriptExtract</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #fafafa;
+            --accent-blue: #0066ff;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --text-dark: #111827;
+            --text-light: #f3f4f6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-blue), #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+        
+        .step-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        
+        .step-number {
+            background: linear-gradient(135deg, var(--accent-blue), #00ccff);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">SE</span>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">ScriptExtract</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-300 hover:text-blue-400 transition-colors">Extract</a>
+                    <a href="about.html" class="text-white hover:text-blue-400 transition-colors">About</a>
+                    <a href="help.html" class="text-gray-300 hover:text-blue-400 transition-colors">Help</a>
+                    <a href="examples.html" class="text-gray-300 hover:text-blue-400 transition-colors">Examples</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                    About <span class="gradient-text">ScriptExtract</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    We're revolutionizing how people work with YouTube content by making transcript extraction 
+                    instant, accurate, and accessible to everyone.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="fade-in">
+                    <h2 class="text-4xl font-bold mb-6">Our Mission</h2>
+                    <p class="text-lg text-gray-300 mb-6">
+                        In a world where video content dominates, we believe the spoken word should be as accessible 
+                        as the written word. ScriptExtract bridges this gap by providing instant, accurate transcripts 
+                        from any YouTube video.
+                    </p>
+                    <p class="text-lg text-gray-300 mb-6">
+                        Whether you're a content creator repurposing videos, a researcher analyzing interviews, 
+                        a student taking notes, or a professional creating documentation, ScriptExtract empowers 
+                        you to work more efficiently.
+                    </p>
+                    <p class="text-lg text-gray-300">
+                        Our advanced AI technology ensures 99%+ accuracy while maintaining the natural flow 
+                        and context of the original speech, saving you hours of manual transcription work.
+                    </p>
+                </div>
+                <div class="fade-in">
+                    <div id="missionChart" style="width: 100%; height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6">How It Works</h2>
+                <p class="text-xl text-gray-300">
+                    Our simple 4-step process gets you from video to transcript in seconds
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="step-card rounded-xl p-6 fade-in">
+                    <div class="flex items-center mb-4">
+                        <div class="step-number mr-4">1</div>
+                        <h3 class="text-xl font-bold">Paste URL</h3>
+                    </div>
+                    <p class="text-gray-300">
+                        Simply paste any YouTube video URL into our interface. We support all YouTube link formats.
+                    </p>
+                </div>
+
+                <div class="step-card rounded-xl p-6 fade-in">
+                    <div class="flex items-center mb-4">
+                        <div class="step-number mr-4">2</div>
+                        <h3 class="text-xl font-bold">AI Analysis</h3>
+                    </div>
+                    <p class="text-gray-300">
+                        Our advanced AI analyzes the video's audio track and identifies speech patterns and language.
+                    </p>
+                </div>
+
+                <div class="step-card rounded-xl p-6 fade-in">
+                    <div class="flex items-center mb-4">
+                        <div class="step-number mr-4">3</div>
+                        <h3 class="text-xl font-bold">Transcription</h3>
+                    </div>
+                    <p class="text-gray-300">
+                        The AI converts speech to text with timestamps, proper punctuation, and formatting.
+                    </p>
+                </div>
+
+                <div class="step-card rounded-xl p-6 fade-in">
+                    <div class="flex items-center mb-4">
+                        <div class="step-number mr-4">4</div>
+                        <h3 class="text-xl font-bold">Export & Use</h3>
+                    </div>
+                    <p class="text-gray-300">
+                        Copy, download, or export your transcript in multiple formats for immediate use.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6">Powerful Features</h2>
+                <p class="text-xl text-gray-300">
+                    Everything you need for professional transcript extraction
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="feature-card rounded-xl p-8 fade-in">
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-2xl">⚡</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Lightning Fast</h3>
+                    <p class="text-gray-300">
+                        Get transcripts in seconds, not hours. Our optimized processing delivers results instantly.
+                    </p>
+                </div>
+
+                <div class="feature-card rounded-xl p-8 fade-in">
+                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-2xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">99%+ Accuracy</h3>
+                    <p class="text-gray-300">
+                        Advanced AI ensures exceptional accuracy with proper punctuation and context awareness.
+                    </p>
+                </div>
+
+                <div class="feature-card rounded-xl p-8 fade-in">
+                    <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-2xl">🌍</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Multi-Language</h3>
+                    <p class="text-gray-300">
+                        Support for 50+ languages with automatic language detection and transcription.
+                    </p>
+                </div>
+
+                <div class="feature-card rounded-xl p-8 fade-in">
+                    <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-2xl">📱</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Mobile Friendly</h3>
+                    <p class="text-gray-300">
+                        Works perfectly on all devices - desktop, tablet, and mobile with responsive design.
+                    </p>
+                </div>
+
+                <div class="feature-card rounded-xl p-8 fade-in">
+                    <div class="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-2xl">🔒</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Secure & Private</h3>
+                    <p class="text-gray-300">
+                        Your data is processed securely and never stored. Complete privacy and confidentiality.
+                    </p>
+                </div>
+
+                <div class="feature-card rounded-xl p-8 fade-in">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-2xl">📊</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Multiple Formats</h3>
+                    <p class="text-gray-300">
+                        Export in TXT, SRT, JSON, or PDF formats with customizable formatting options.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6">Perfect For</h2>
+                <p class="text-xl text-gray-300">
+                    ScriptExtract serves a wide range of professionals and use cases
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🎥</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Content Creators</h3>
+                    <p class="text-gray-300 text-sm">
+                        Repurpose video content into blog posts, social media, and articles
+                    </p>
+                </div>
+
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">📚</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Researchers</h3>
+                    <p class="text-gray-300 text-sm">
+                        Analyze interviews, lectures, and educational content efficiently
+                    </p>
+                </div>
+
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">🎓</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Students</h3>
+                    <p class="text-gray-300 text-sm">
+                        Take notes from lectures and educational videos quickly
+                    </p>
+                </div>
+
+                <div class="text-center fade-in">
+                    <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">💼</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Professionals</h3>
+                    <p class="text-gray-300 text-sm">
+                        Document meetings, presentations, and training materials
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">SE</span>
+                </div>
+                <span class="text-xl font-bold gradient-text">ScriptExtract</span>
+            </div>
+            <p class="text-gray-400">
+                © 2024 ScriptExtract. Empowering content creators with instant transcript extraction.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Initialize chart
+        const chartDom = document.getElementById('missionChart');
+        const myChart = echarts.init(chartDom);
+        
+        const option = {
+            backgroundColor: 'transparent',
+            title: {
+                text: 'Transcript Accuracy by Language',
+                textStyle: {
+                    color: '#f3f4f6',
+                    fontSize: 18
+                }
+            },
+            tooltip: {
+                trigger: 'axis',
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                textStyle: {
+                    color: '#f3f4f6'
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: ['English', 'Spanish', 'French', 'German', 'Japanese', 'Chinese'],
+                axisLabel: {
+                    color: '#9ca3af'
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#374151'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                min: 95,
+                max: 100,
+                axisLabel: {
+                    color: '#9ca3af',
+                    formatter: '{value}%'
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: '#374151'
+                    }
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: '#374151'
+                    }
+                }
+            },
+            series: [{
+                data: [99.2, 98.7, 98.9, 99.1, 97.8, 98.3],
+                type: 'bar',
+                itemStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                        { offset: 0, color: '#0066ff' },
+                        { offset: 1, color: '#00ccff' }
+                    ])
+                },
+                barWidth: '60%'
+            }]
+        };
+
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

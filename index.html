@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScriptExtract - YouTube Transcript Extractor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #1a1a1a;
+            --secondary-bg: #fafafa;
+            --accent-blue: #0066ff;
+            --success-green: #22c55e;
+            --warning-amber: #f59e0b;
+            --text-dark: #111827;
+            --text-light: #f3f4f6;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        .mono-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(26, 26, 26, 0.85)), 
+                        url('resources/hero-bg.png') center/cover;
+            position: relative;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--accent-blue), #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), #0052cc);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.3);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-green), #16a34a);
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+        }
+        
+        .input-field {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+        
+        .transcript-area {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, var(--accent-blue), #00ccff);
+            transition: width 0.5s ease;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .content-layer {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .timestamp {
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+        
+        .loading-dots {
+            display: inline-block;
+        }
+        
+        .loading-dots::after {
+            content: '';
+            animation: dots 2s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-sm">SE</span>
+                    </div>
+                    <span class="text-xl font-bold gradient-text">ScriptExtract</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-white hover:text-blue-400 transition-colors">Extract</a>
+                    <a href="about.html" class="text-gray-300 hover:text-blue-400 transition-colors">About</a>
+                    <a href="help.html" class="text-gray-300 hover:text-blue-400 transition-colors">Help</a>
+                    <a href="examples.html" class="text-gray-300 hover:text-blue-400 transition-colors">Examples</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center pt-20">
+        <canvas id="particleCanvas" class="particle-canvas"></canvas>
+        <div class="content-layer w-full">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-12 fade-in">
+                    <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                        Extract <span class="gradient-text">YouTube Scripts</span>
+                        <br>Instantly
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                        Transform any YouTube video into a clean, readable transcript with a single click. 
+                        Perfect for content creators, researchers, and students.
+                    </p>
+                </div>
+
+                <!-- Main Extraction Interface -->
+                <div class="max-w-4xl mx-auto fade-in">
+                    <div class="glass-effect rounded-2xl p-8 mb-8">
+                        <div class="mb-6">
+                            <label for="youtubeUrl" class="block text-lg font-semibold mb-3">
+                                Paste YouTube URL
+                            </label>
+                            <div class="relative">
+                                <input 
+                                    type="url" 
+                                    id="youtubeUrl" 
+                                    placeholder="https://www.youtube.com/watch?v=..."
+                                    class="w-full px-6 py-4 rounded-xl input-field text-white placeholder-gray-400 text-lg"
+                                >
+                                <div id="urlStatus" class="absolute right-4 top-1/2 transform -translate-y-1/2">
+                                    <!-- URL validation icon will appear here -->
+                                </div>
+                            </div>
+                            <div id="videoPreview" class="mt-4 hidden">
+                                <!-- Video thumbnail preview -->
+                            </div>
+                        </div>
+
+                        <button 
+                            id="extractBtn" 
+                            class="w-full btn-primary text-white font-semibold py-4 px-8 rounded-xl text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled
+                        >
+                            <span id="btnText">Extract Script</span>
+                            <span id="btnLoading" class="hidden loading-dots"></span>
+                        </button>
+                    </div>
+
+                    <!-- Progress Section -->
+                    <div id="progressSection" class="glass-effect rounded-2xl p-8 mb-8 hidden">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-semibold">Extracting Script...</h3>
+                            <span id="progressPercent" class="text-blue-400 font-semibold">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-3 mb-4">
+                            <div id="progressBar" class="progress-bar h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <p id="progressStatus" class="text-gray-300">Analyzing video...</p>
+                    </div>
+
+                    <!-- Results Section -->
+                    <div id="resultsSection" class="glass-effect rounded-2xl p-8 hidden">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-bold">Extracted Script</h3>
+                            <div class="flex items-center space-x-3">
+                                <button id="searchBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors">
+                                    🔍 Search
+                                </button>
+                                <button id="copyBtn" class="btn-success text-white px-6 py-2 rounded-lg font-semibold">
+                                    📋 Copy Full Script
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="searchBox" class="mb-4 hidden">
+                            <input 
+                                type="text" 
+                                id="searchInput" 
+                                placeholder="Search in transcript..."
+                                class="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white"
+                            >
+                        </div>
+
+                        <div id="transcriptArea" class="transcript-area rounded-lg p-6 mono-font text-sm leading-relaxed">
+                            <!-- Transcript content will appear here -->
+                        </div>
+
+                        <div class="mt-6 flex flex-wrap gap-3">
+                            <button id="copyWithTimestamps" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors">
+                                Copy with Timestamps
+                            </button>
+                            <button id="exportTxt" class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors">
+                                Export as TXT
+                            </button>
+                            <button id="exportSrt" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors">
+                                Export as SRT
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Powerful <span class="gradient-text">Features</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Everything you need to work with YouTube transcripts efficiently
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card rounded-xl p-8 fade-in">
+                    <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-2xl">⚡</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Instant Extraction</h3>
+                    <p class="text-gray-300">
+                        Get your transcript in seconds with our advanced processing engine. 
+                        No waiting, no delays - just instant results.
+                    </p>
+                </div>
+
+                <div class="feature-card rounded-xl p-8 fade-in">
+                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-2xl">🎯</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">High Accuracy</h3>
+                    <p class="text-gray-300">
+                        Advanced AI ensures 99%+ accuracy in transcript extraction. 
+                        Clean, readable text with proper punctuation and formatting.
+                    </p>
+                </div>
+
+                <div class="feature-card rounded-xl p-8 fade-in">
+                    <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-6">
+                        <span class="text-2xl">🛠️</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Multiple Formats</h3>
+                    <p class="text-gray-300">
+                        Export your transcripts in various formats - plain text, SRT subtitles, 
+                        or JSON with timestamps for maximum flexibility.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-20 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-bold mb-6">Trusted by <span class="gradient-text">Thousands</span></h2>
+            </div>
+            
+            <div class="grid md:grid-cols-4 gap-8 text-center">
+                <div class="fade-in">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="statVideos">0</div>
+                    <div class="text-gray-300">Videos Processed</div>
+                </div>
+                <div class="fade-in">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="statAccuracy">0</div>
+                    <div class="text-gray-300">% Accuracy Rate</div>
+                </div>
+                <div class="fade-in">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="statUsers">0</div>
+                    <div class="text-gray-300">Active Users</div>
+                </div>
+                <div class="fade-in">
+                    <div class="text-4xl font-bold gradient-text mb-2" id="statTime">0</div>
+                    <div class="text-gray-300">Avg. Seconds</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex items-center justify-center space-x-3 mb-4">
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">SE</span>
+                </div>
+                <span class="text-xl font-bold gradient-text">ScriptExtract</span>
+            </div>
+            <p class="text-gray-400">
+                © 2024 ScriptExtract. Empowering content creators with instant transcript extraction.
+            </p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>
